@@ -1,17 +1,67 @@
-<% if @brewery %>
-You searched for: <%= @zipcode %>
-<%=  @brewery.name %>
-<% else %>
-<%= form_tag brewers_path, method: "get"  do %>
-  <%= text_field_tag(:zipcode) %>
-  <%= submit_tag ("find beer")%>
-  <% end %>
-<% end %>
+<div class="wrapper-breweries">
+  <% if @brewery %>
 
-<br><br>
+  <!-- Show the closest brewery if there is a zipcode-->
+  <div class="breweries-closest">
+    <div class="text-center">
+      <h2>The closest brewery to <%= @zipcode %> is..
+        <br> <%= @brewery.name %></h2>
+      </div>
+      <div class="brewery-info">
+        <div class="brewery-map">
 
-<% @breweries.each do |brewery| %>
-<%= brewery.name %> <br>
-<% end %>
+        </div>
+        <div class="brewery-rest">
+          They serve:
+          <div class="brewery-beers">
+            <% (1..4).each do |beer|  %>
+            <div class="brewery-beer-card">
+              <img src="http://cliparts.co/cliparts/piq/KBx/piqKBxbrT.png" alt="beer" width="60px"> <br>
+              Dikke monnik <br>
+              Blond <br>
+              6.4% <br>
+              20l <br>
+            </div>
 
-<%= link_to "Show all breweries", brewers_path  %>
+            <% end %>
+          </div>
+          Address: <%= @brewery.address %>,
+          <%= @brewery.zipcode %>,
+          <%= @brewery.city %> <br>
+          Open on: <% JSON.parse(@brewery.open).each do |day| %>
+          <%= day %>
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- If there is no postalcode show form to put in postal code -->
+
+    <% else %>
+    <div class="breweries-find">
+      <div class="form">
+        <%= form_tag brewers_path, method: "get"  do %>
+        <%= text_field_tag "zipcode", nil, :placeholder => "fill in your zipcode", class: "input-postcode", autocomplete: "off" %>
+        <%= submit_tag "find beer", class: "btn-beer" %>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+
+    <!-- After show of one brewery or option to search for a brewery show all breweries -->
+    <div class="breweries-all">
+    <h2>Other breweries</h2>
+     <% @breweries.each do |brewery| %>
+     <%= brewery.name %>, <%= brewery.city %> <br>
+     <% end %>
+     <%= link_to "search another brewery", brewers_path  %>
+   </div>
+
+
+
+ </div>
+
+
+
+ <%= link_to "Show all breweries", brewers_path  %>
