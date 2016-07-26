@@ -1,7 +1,9 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+Brewer.destroy_all
+
+json_breweries = '{"breweries":[{"name":"Maximus","address":"Pratumplaats 2A","zipcode":"3454 NA","city":"Utrecht (De Meern)","open":["Wednesday","Thursday","Friday","Saturday","Sunday"]},{"name":"Speciaalbierbrouwerij Duits & Lauret","address":"Schoolstraat 77","zipcode":"3451 AC","city":"Vleuten","open":["Monday","Tuesday","Wednesday"]},{"name":"Brouwerij de Molen","address":"Overtocht 43","zipcode":"2411 BT","city":"Bodegraven","open":["Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]},{"name":"Dorpsbrouwerij de Maar","address":"Maar 2","zipcode":"6454 AM","city":"Jabeek","open":["Tuesday","Wednesday","Thursday","Friday","Saturday"]},{"name":"Stadsbrouwerij De Pelgrim","address":"Aelbrechtskolk 12","zipcode":"3024 RE","city":"Rotterdam","open":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]},{"name":"Leidsch Bier","address":"Flevoweg 35a","zipcode":"2318 BX","city":"Leiden","open":["Monday","Tuesday","Wednesday","Thursday","Friday"]},{"name":"Brouwerij Het Anker","address":"Guido Gezellelaan 49","zipcode":"2800","city":"Mechelen, Belgi\u00eb","open":["Tuesday","Wednesday","Thursday","Friday"]},{"name":"Brouwerij \'t IJ","address":"Funenkade 7","zipcode":"1018 AL","city":"Amsterdam","open":["Tuesday","Wednesday","Thursday","Friday"]},{"name":"Jopen","address":"Gedempte Voldersgracht 2","zipcode":"2011 WB","city":"Haarlem","open":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]},{"name":"Texelse Bierbrouwerij","address":"Schilderweg 214","zipcode":"1792 CK","city":"Oudeschild","open":["Thursday","Friday","Saturday"]},{"name":"Brouwerij Dampegheest","address":"Achterweg 22","zipcode":"1906 AG","city":"Limmen","open":["Friday","Saturday","Sunday"]},{"name":"de naeckte brouwers","address":"Weverij 5","zipcode":"1185 ZE","city":"Amstelveen","open":["Wednesday"]}]}'
+
+breweries = JSON.parse(json_breweries, symbolize_names: true)
+
+breweries[:breweries].each do |brewery|
+  Brewer.create(brewery)
+end
