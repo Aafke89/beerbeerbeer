@@ -1,2 +1,12 @@
-THIS IS HOME
+<div class="wrapper-home">
+<div>
+  <div class="home-tagline">
+    Feeling thirsty?
+  </div>
+  <%= form_tag brewers_path, method: "get"  do %>
+  <%= text_field_tag(:zipcode) %>
+  <%= submit_tag ("find beer")%>
+  <% end %>
+</div>
+</div>
 
