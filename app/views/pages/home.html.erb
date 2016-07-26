@@ -1,12 +1,17 @@
 <div class="wrapper-home">
-<div>
-  <div class="home-tagline">
-    Feeling thirsty?
+  <div class="home-content">
+    <div class="home-tagline">
+      Feeling thirsty?
+    </div>
+    <div class="form">
+      <%= form_tag brewers_path, method: "get"  do %>
+      <%= text_field_tag "zipcode", nil, :placeholder => "fill in your zipcode", class: "input-postcode", autocomplete: "off" %> <br>
+      <div class="text-center">
+      <%= submit_tag "find beer", class: "btn-beer" %>
+      </div>
+      <% end %>
+    </div>
+
   </div>
-  <%= form_tag brewers_path, method: "get"  do %>
-  <%= text_field_tag(:zipcode) %>
-  <%= submit_tag ("find beer")%>
-  <% end %>
-</div>
 </div>
 

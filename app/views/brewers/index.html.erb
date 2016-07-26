@@ -1,9 +1,17 @@
+<% if @brewery %>
 You searched for: <%= @zipcode %>
-<br>
 <%=  @brewery.name %>
+<% else %>
+<%= form_tag brewers_path, method: "get"  do %>
+  <%= text_field_tag(:zipcode) %>
+  <%= submit_tag ("find beer")%>
+  <% end %>
+<% end %>
 
 <br><br>
 
 <% @breweries.each do |brewery| %>
 <%= brewery.name %> <br>
 <% end %>
+
+<%= link_to "Show all breweries", brewers_path  %>
