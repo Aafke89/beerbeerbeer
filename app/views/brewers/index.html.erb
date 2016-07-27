@@ -7,77 +7,78 @@
 
       <!-- Differ text depending on brewery found nearby or by clicking the link -->
       <% if @zipcode %>
-        The closest brewery to <%= @zipcode %> is..
+      The closest brewery to <%= @zipcode %> is..
       <% end %>
-        <br> <h2><%= @brewery.name %></h2>
+      <br> <h2><%= @brewery.name %></h2>
+    </div>
+    <div class="brewery-info">
+
+      <div id="brewery-map">
+
       </div>
-      <div class="brewery-info">
-
-        <div id="brewery-map">
-
-        </div>
-        <div class="brewery-rest">
-          They serve:
-          <div class="brewery-beers">
-            <% (1..4).each do |beer|  %>
-            <div class="brewery-beer-card">
-              <img src="http://cliparts.co/cliparts/piq/KBx/piqKBxbrT.png" alt="beer" width="60px"> <br>
-              Dikke monnik <br>
-              Blond <br>
-              6.4% <br>
-              20l <br>
-            </div>
-
-            <% end %>
+      <div class="brewery-rest">
+        They serve:
+        <div class="brewery-beers">
+          <% (1..4).each do |beer|  %>
+          <div class="brewery-beer-card">
+            <img src="http://cliparts.co/cliparts/piq/KBx/piqKBxbrT.png" alt="beer" width="60px"> <br>
+            Dikke monnik <br>
+            Blond <br>
+            6.4% <br>
+            20l <br>
           </div>
-          Address: <%= @brewery.address %>,
-          <%= @brewery.zipcode %>,
-          <%= @brewery.city %> <br>
-          Open on: <% JSON.parse(@brewery.open).each do |day| %>
-          <%= day %>
+
           <% end %>
-
         </div>
-      </div>
-    </div>
-
-    <!-- If there is no brewery selected show form to put in postal code -->
-
-    <% else %>
-
-    <!-- When no location was sound show message -->
-    <% if @zipcode %>
-       <div class="breweries-message">Oh no! There are no close breweries to <%= @zipcode %>. Please try again. </div>
-    <% end %>
-
-    <!-- ask for zipcode -->
-    <div class="breweries-find">
-      <div class="form">
-        <%= form_tag brewers_path, method: "get"  do %>
-        <%= text_field_tag "zipcode", nil, pattern: '\d{4}\s?[a-zA-Z]{2}', :placeholder => "fill in your zipcode", class: "input-postcode", autocomplete: "off", title: "e.g. 1234AZ" %>
-        <%= submit_tag "find beer", class: "btn-beer" %>
+        Address: <%= @brewery.address %>,
+        <%= @brewery.zipcode %>,
+        <%= @brewery.city %> <br>
+        Open on: <% JSON.parse(@brewery.open).each do |day| %>
+        <%= day %>
         <% end %>
+
       </div>
     </div>
-    <% end %>
+  </div>
 
-    <!-- After show of one brewery or option to search for a brewery show all breweries -->
-    <div class="breweries-all">
+  <!-- If there is no brewery selected show form to put in postal code -->
+
+  <% else %>
+
+  <!-- When no location was sound show message -->
+  <% if @zipcode %>
+  <div class="breweries-message">Oh no! There are no close breweries to <%= @zipcode %>. Please try again. </div>
+  <% end %>
+
+  <!-- ask for zipcode -->
+  <div class="breweries-find">
+    <div class="form">
+      <%= form_tag brewers_path, method: "get"  do %>
+      <%= text_field_tag "zipcode", nil, pattern: '\d{4}\s?[a-zA-Z]{2}', :placeholder => "fill in your zipcode", class: "input-postcode", autocomplete: "off", title: "e.g. 1234AZ" %>
+      <%= submit_tag "find beer", class: "btn-beer" %>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+
+  <!-- After show of one brewery or option to search for a brewery show all breweries -->
+  <div class="breweries-all">
     <h2>Other breweries</h2>
-     <% @breweries.each do |brewery| %>
-     <%= brewery.name %>, <%= brewery.city %>
-     <%= link_to "show", brewers_path(brewery: brewery ) %> <br>
-     <% end %>
-     <br>
-     <%= link_to "search another brewery", brewers_path, class: "btn-biertje"  %>
-   </div>
+    <% @breweries.each do |brewery| %>
+    <%= brewery.name %>, <%= brewery.city %>
+    <%= link_to "show", brewers_path(brewery: brewery ) %> <br>
+    <% end %>
+    <br>
+    <%= link_to "search another brewery", brewers_path, class: "btn-biertje"  %>
+  </div>
 
 
 
- </div>
+</div>
 
 
 <!-- Code to show te location of brewery on a map -->
+<% if @brewery %>
 
 <% content_for(:after_js) do %>
 <script type="text/javascript">
@@ -102,11 +103,14 @@
       position: myLatLng,
       map: map,
       animation: google.maps.Animation.DROP,
-      icon: "http://res.cloudinary.com/aafke/image/upload/v1468500999/markerblauw_rsfl86.png"
+      icon: "http://emoji.fileformat.info/gemoji/beer.png"
     });
 
 
 
   })
 </script>
+<% end %>
+
+
 <% end %>
