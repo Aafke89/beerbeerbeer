@@ -7,12 +7,13 @@
 
       <!-- Differ text depending on brewery found nearby or by clicking the link -->
       <% if @zipcode %>
-        <h2>The closest brewery to <%= @zipcode %> is.. </h2>
+        The closest brewery to <%= @zipcode %> is..
       <% end %>
         <br> <h2><%= @brewery.name %></h2>
       </div>
       <div class="brewery-info">
-        <div class="brewery-map">
+
+        <div id="brewery-map">
 
         </div>
         <div class="brewery-rest">
@@ -53,7 +54,7 @@
     <div class="breweries-find">
       <div class="form">
         <%= form_tag brewers_path, method: "get"  do %>
-        <%= text_field_tag "zipcode", nil, :placeholder => "fill in your zipcode", class: "input-postcode", autocomplete: "off" %>
+        <%= text_field_tag "zipcode", nil, pattern: '\d{4}\s?[a-zA-Z]{2}', :placeholder => "fill in your zipcode", class: "input-postcode", autocomplete: "off", title: "e.g. 1234AZ" %>
         <%= submit_tag "find beer", class: "btn-beer" %>
         <% end %>
       </div>
@@ -67,7 +68,8 @@
      <%= brewery.name %>, <%= brewery.city %>
      <%= link_to "show", brewers_path(brewery: brewery ) %> <br>
      <% end %>
-     <%= link_to "search another brewery", brewers_path  %>
+     <br>
+     <%= link_to "search another brewery", brewers_path, class: "btn-biertje"  %>
    </div>
 
 
@@ -75,5 +77,36 @@
  </div>
 
 
+<!-- Code to show te location of brewery on a map -->
 
- <%= link_to "Show all breweries", brewers_path  %>
+<% content_for(:after_js) do %>
+<script type="text/javascript">
+  $(document).on('ready', function() {
+    var myLatLng = {lat: <%= @brewery.latitude %>, lng: <%= @brewery.longitude %>};
+
+    var map = new google.maps.Map(document.getElementById('brewery-map'), {
+      zoom: 15,
+      center: myLatLng,
+      draggable: true,
+      scrollwheel: false,
+      mapTypeControl: false,
+      styles: window.mapStyle
+    });
+
+    // keeps marker in center
+    // map.addListener('idle', function(map){
+    //   this.setCenter(marker.getPosition());
+    // });
+
+    var marker = new google.maps.Marker({
+      position: myLatLng,
+      map: map,
+      animation: google.maps.Animation.DROP,
+      icon: "http://res.cloudinary.com/aafke/image/upload/v1468500999/markerblauw_rsfl86.png"
+    });
+
+
+
+  })
+</script>
+<% end %>

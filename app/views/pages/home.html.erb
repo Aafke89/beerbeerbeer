@@ -5,7 +5,7 @@
     </div>
     <div class="form">
       <%= form_tag brewers_path, method: "get"  do %>
-      <%= text_field_tag "zipcode", nil, pattern: '\A\d{4}\s?[a-zA-Z]{2}\z', :placeholder => "fill in your zipcode", class: "input-postcode", autocomplete: "off", title: "1234 AZ" %> <br>
+      <%= text_field_tag "zipcode", nil, pattern: '\d{4}\s?[a-zA-Z]{2}', :placeholder => "fill in your zipcode", class: "input-postcode", autocomplete: "off", title: "e.g. 1234AZ" %> <br>
       <div class="text-center">
       <%= submit_tag "find beer", class: "btn-beer" %>
       </div>
