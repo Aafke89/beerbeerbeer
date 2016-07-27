@@ -1,6 +1,6 @@
 class BrewersController < ApplicationController
   before_action :find_brewery, only: [:show]
-  before_action :show_nearby_brewery, only: [:index, :show]
+  before_action :show_brewery, only: [:index, :show]
 
   def index
 
@@ -17,11 +17,14 @@ class BrewersController < ApplicationController
      # @zipcode = params[:zipcode]
   end
 
-  def show_nearby_brewery
+  def show_brewery
     @breweries = Brewer.all
     @zipcode = params[:zipcode]
+    @brew_show = params[:brewery]
     if @zipcode
       @brewery = @breweries.near(@zipcode, 100, order: "distance").first
+    elsif @brew_show
+      @brewery = Brewer.find(@brew_show)
     end
   end
 

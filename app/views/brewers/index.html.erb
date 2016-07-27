@@ -1,11 +1,15 @@
 <div class="wrapper-breweries">
   <% if @brewery %>
 
-  <!-- Show the closest brewery if there is a zipcode-->
+  <!-- Show the brewery if there is a brewery selected -->
   <div class="breweries-closest">
     <div class="text-center">
-      <h2>The closest brewery to <%= @zipcode %> is..
-        <br> <%= @brewery.name %></h2>
+
+      <!-- Differ text depending on brewery found nearby or by clicking the link -->
+      <% if @zipcode %>
+        <h2>The closest brewery to <%= @zipcode %> is.. </h2>
+      <% end %>
+        <br> <h2><%= @brewery.name %></h2>
       </div>
       <div class="brewery-info">
         <div class="brewery-map">
@@ -36,9 +40,16 @@
       </div>
     </div>
 
-    <!-- If there is no postalcode show form to put in postal code -->
+    <!-- If there is no brewery selected show form to put in postal code -->
 
     <% else %>
+
+    <!-- When no location was sound show message -->
+    <% if @zipcode %>
+       <div class="breweries-message">Oh no! There are no close breweries to <%= @zipcode %>. Please try again. </div>
+    <% end %>
+
+    <!-- ask for zipcode -->
     <div class="breweries-find">
       <div class="form">
         <%= form_tag brewers_path, method: "get"  do %>
@@ -53,7 +64,8 @@
     <div class="breweries-all">
     <h2>Other breweries</h2>
      <% @breweries.each do |brewery| %>
-     <%= brewery.name %>, <%= brewery.city %> <br>
+     <%= brewery.name %>, <%= brewery.city %>
+     <%= link_to "show", brewers_path(brewery: brewery ) %> <br>
      <% end %>
      <%= link_to "search another brewery", brewers_path  %>
    </div>

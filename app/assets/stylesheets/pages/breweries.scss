@@ -50,11 +50,20 @@
 
 // If there is no postal code show form to fill in
 
+.breweries-message {
+  color: rgb(216, 216, 216);
+  background-color: rgb(90, 0, 0);
+  padding: 20px;
+  margin: 0px 60px;
+  text-align: center;
+}
+
 .breweries-find {
   display: flex;
   justify-content: center;
   padding-bottom: 20px;
   border-bottom: 3px solid #d9910a;
+  margin: 20px 60px;
 }
 
 // Show all breweries
