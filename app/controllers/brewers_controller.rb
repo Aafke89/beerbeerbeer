@@ -26,9 +26,10 @@ class BrewersController < ApplicationController
     elsif @brew_show
       @brewery = Brewer.find(@brew_show)
     end
+    beers
   end
 
-
-
-
+  def beers
+    @beers = Beer.where(brewery: @brewery.name)
+  end
 end

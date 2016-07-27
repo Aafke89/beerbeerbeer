@@ -46,10 +46,13 @@
 
 .brewery-beer-card {
   background-color: rgba(0,0,0,0.05);
-  text-align: center;
+  text-align: left;
   padding: 20px;
   margin: 0px 10px;
   border-radius: 5px;
+  img {
+    margin: auto;
+  }
 }
 
 // If there is no postal code show form to fill in

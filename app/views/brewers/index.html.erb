@@ -19,13 +19,19 @@
       <div class="brewery-rest">
         They serve:
         <div class="brewery-beers">
-          <% (1..4).each do |beer|  %>
+          <% @beers.each do |beer|  %>
           <div class="brewery-beer-card">
             <img src="http://cliparts.co/cliparts/piq/KBx/piqKBxbrT.png" alt="beer" width="60px"> <br>
-            Dikke monnik <br>
+
+            <%= beer.name %> <br>
+            <%= beer.style %>,
+            <%= beer.alcohol %>% <br>
+            keg: <%= beer.volume %> l, <%= beer.keg %>
+
+            <!-- Dikke monnik <br>
             Blond <br>
             6.4% <br>
-            20l <br>
+            20l <br> -->
           </div>
 
           <% end %>
