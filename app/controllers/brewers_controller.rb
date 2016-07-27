@@ -30,6 +30,8 @@ class BrewersController < ApplicationController
   end
 
   def beers
-    @beers = Beer.where(brewery: @brewery.name)
+    if @brewery
+      @beers = Beer.where(brewery: @brewery.name)
+    end
   end
 end

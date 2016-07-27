@@ -2,7 +2,7 @@
   .input-postcode {
     text-align: center;
     font-size: 52px;
-    background-color: black;
+    background-color: rgba(21, 21, 23, 0);
     max-width: 500px;
     border: none;
     margin: 10px;
@@ -20,7 +20,7 @@
       border: 2px solid #d9910a;
       margin: 10px;
       padding: 10px 15px;
-      background-color: black;
+      background-color: rgba(21, 21, 23, 0.5);
       &:hover {
         color: black;
         background-color: #d9910a;

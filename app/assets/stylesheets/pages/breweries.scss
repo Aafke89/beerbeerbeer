@@ -5,6 +5,8 @@
   padding: 60px;
   font-family: Geneva;
   font-size: 14px;
+   background-image: url("http://www.tapcorknyc.com/tap/wp-content/uploads/2013/07/background-barrels-1.jpg");
+  background-size: cover;
 }
 
 // Show brewery if there is a postal code
@@ -12,7 +14,7 @@
 .breweries-closest {
   min-width: 600px;
   min-height: 300px;
-  background-color: #d9910a;
+  background-color: rgba(217, 145, 10, 0.80);;
   padding: 10px;
   margin: 60px;
   border-radius: 2px;
@@ -45,7 +47,7 @@
 }
 
 .brewery-beer-card {
-  background-color: rgba(0,0,0,0.05);
+  background-color: rgb(172, 118, 15);
   text-align: left;
   padding: 20px;
   margin: 0px 10px;
@@ -85,12 +87,30 @@
   font-size: 14px;
 }
 
-.btn-biertje {
-  padding: 10px;
-  color: #d9910a;
-  background-color: black;
-  border: 2px solid #d9910a;
+.breweries-name {
+  width: 320px;
+  display: inline-block;
+}
 
+.open {
+  width: 60px;
+  display: inline-block;
+}
+
+.breweries-click {
+  display: inline-block;
+  .label {
+    margin: 0px 5px;
+    width: 60px;
+  }
+}
+
+.btn-biertje {
+  padding:  10px 15px;
+  color: #d9910a;
+  background-color: #202123;
+  border: 2px solid #d9910a;
+  border-radius: 4px;
   &:hover {
     background-color: #d9910a;
     color: black;

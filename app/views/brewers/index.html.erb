@@ -17,28 +17,38 @@
 
       </div>
       <div class="brewery-rest">
+        <!-- Show their beers if there are any in de database -->
+        <% if @beers.length > 0 %>
         They serve:
         <div class="brewery-beers">
           <% @beers.each do |beer|  %>
           <div class="brewery-beer-card">
-            <img src="http://cliparts.co/cliparts/piq/KBx/piqKBxbrT.png" alt="beer" width="60px"> <br>
-
+            <!-- <img src="http://cliparts.co/cliparts/piq/KBx/piqKBxbrT.png" alt="beer" width="60px"> <br> -->
             <%= beer.name %> <br>
             <%= beer.style %>,
             <%= beer.alcohol %>% <br>
             keg: <%= beer.volume %> l, <%= beer.keg %>
-
-            <!-- Dikke monnik <br>
-            Blond <br>
-            6.4% <br>
-            20l <br> -->
           </div>
 
           <% end %>
         </div>
+        <% else %>
+        No beers in our database! <br>I'm afraid you'll just have to go there to see which beers they have! <br><br>
+        <img src="https://media.giphy.com/media/ZzN0sVmiYGRB6/giphy.gif" alt="beer me">
+        <br><br>
+        <% end %>
+
         Address: <%= @brewery.address %>,
         <%= @brewery.zipcode %>,
         <%= @brewery.city %> <br>
+
+        <% if @brewery.open_today  %>
+        <div class="label label-success">OPEN</div>
+        <% else %>
+        <div class="label label-danger">CLOSED</div>
+        <% end %>
+
+        <br>
         Open on: <% JSON.parse(@brewery.open).each do |day| %>
         <%= day %>
         <% end %>
@@ -72,15 +82,27 @@
   <div class="breweries-all">
     <h2>Other breweries</h2>
     <% @breweries.each do |brewery| %>
-    <%= brewery.name %>, <%= brewery.city %>
-    <%= link_to "show", brewers_path(brewery: brewery ) %> <br>
+    <div class="breweries-name">
+      <%= brewery.name %>, <%= brewery.city %>
+    </div>
+    <div class="breweries-click">
+      <!-- Show if brewery is open today or closed -->
+      <div class="open">
+        <% if brewery.open_today  %>
+        <div class="label label-success">OPEN</div>
+        <% else %>
+        <div class="label label-danger">CLOSED</div>
+        <% end %>
+      </div>
+      <!-- Show brewery -->
+      <%= link_to "SHOW", brewers_path(brewery: brewery), class: "label label-warning" %>
+    </div><br>
     <% end %>
-    <br>
+
+    <br> <br>
     <%= link_to "search another brewery", brewers_path, class: "btn-biertje"  %>
+    <br><br>
   </div>
-
-
-
 </div>
 
 
