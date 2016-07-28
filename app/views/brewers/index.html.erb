@@ -97,7 +97,7 @@
     <h2>Other breweries</h2>
 
     <!-- If location is known sort on distance -->
-    <% if @zipcode %>
+    <% if @zipcode && @brewery %>
       <% @all_breweries = @breweries.near(@zipcode, 200, order: "distance") %>
     <% else %>
       <% @all_breweries = @breweries %>
@@ -120,7 +120,7 @@
 
       <!-- Compute distance of all breweries -->
     </div>
-        <% if @zipcode %>
+        <% if @zipcode && @brewery %>
              <%= brewery.distance(@zipcode).round(0) %> km away
         <% end %> <br>
 
