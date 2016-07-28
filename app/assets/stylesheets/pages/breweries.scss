@@ -3,7 +3,7 @@
   min-width: 100vw;
   background-color: black;
   padding: 60px;
-  font-family: Geneva;
+  font-family: $smallfont;
   font-size: 14px;
    background-image: url("http://www.tapcorknyc.com/tap/wp-content/uploads/2013/07/background-barrels-1.jpg");
   background-size: cover;
@@ -29,7 +29,6 @@
 #brewery-map {
   min-height: 240px;
   min-width: 300px;
-  background-color: red;
   border-radius: 2px;
 }
 
@@ -71,7 +70,7 @@
   display: flex;
   justify-content: center;
   padding-bottom: 20px;
-  border-bottom: 3px solid #d9910a;
+  border-bottom: 3px solid $yellow;
   margin: 20px 60px;
 }
 
@@ -80,10 +79,10 @@
 .breweries-all {
   min-width: 600px;
   margin: 60px;
-  border: 4px dotted #d9910a;
+  border: 4px dotted $yellow;
   padding: 20px;
   color: rgb(216, 216, 216);
-  font-family: Geneva;
+  font-family: $smallfont;
   font-size: 14px;
 }
 
@@ -107,12 +106,12 @@
 
 .btn-biertje {
   padding:  10px 15px;
-  color: #d9910a;
+  color: $yellow;
   background-color: #202123;
-  border: 2px solid #d9910a;
+  border: 2px solid $yellow;
   border-radius: 4px;
   &:hover {
-    background-color: #d9910a;
+    background-color: $yellow;
     color: black;
     text-decoration: none;
   }
@@ -120,7 +119,7 @@
 
 
 h2 {
-  font-family: Geneva;
+  font-family: $smallfont;
 }
 
 // Show underneeath eachother on a smaller xcreen

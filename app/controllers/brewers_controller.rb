@@ -1,14 +1,10 @@
 class BrewersController < ApplicationController
-  before_action :find_brewery, only: [:show]
   before_action :show_brewery, only: [:index, :show]
 
   def index
 
   end
 
-  def show
-
-  end
 
   private
 
