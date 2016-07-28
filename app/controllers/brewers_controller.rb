@@ -19,6 +19,7 @@ class BrewersController < ApplicationController
     @brew_show = params[:brewery]
     if @zipcode
       @brewery = @breweries.near(@zipcode, 100, order: "distance").first
+      @distance = distance
     elsif @brew_show
       @brewery = Brewer.find(@brew_show)
     end
@@ -30,4 +31,12 @@ class BrewersController < ApplicationController
       @beers = Beer.where(brewery: @brewery.name)
     end
   end
+
+  def distance
+    if @brewery && @zipcode
+    lat_lng_zipcode = Geocoder.coordinates(@zipcode)
+    distance = (Geocoder::Calculations.distance_between([@brewery.latitude, @brewery.longitude], lat_lng_zipcode)) * 1.609344
+    end
+  end
+
 end

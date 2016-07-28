@@ -36,6 +36,10 @@
   min-height: 200px;
   width: 100%;
   padding: 0px 40px;
+  .label {
+    padding: 12px 95px;
+    font-size: 22px;
+  }
 }
 
 .brewery-beers {
@@ -89,6 +93,15 @@
 .breweries-name {
   width: 320px;
   display: inline-block;
+}
+
+.breweries-link {
+  color: $yellow;
+  &:hover {
+    color: $yellow;
+    font-style: italic;
+    text-decoration: none;
+  }
 }
 
 .open {

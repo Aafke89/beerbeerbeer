@@ -1,9 +1,10 @@
 .form {
   .input-postcode {
-    text-align: center;
+    font-family: $smallfont;
+    text-align: left;
     font-size: 52px;
     background-color: $transparant;
-    max-width: 500px;
+    max-width: 460px;
     border: none;
     margin: 10px;
     color: white;
@@ -15,6 +16,7 @@
 
 .form {
   .btn-beer {
+    font-family: $smallfont;
       color: rgb(216, 216, 216);
       font-size: 40px;
       border: 2px solid $yellow;
