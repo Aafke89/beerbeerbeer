@@ -39,9 +39,12 @@
         <!-- Show if brewery is open today -->
         <% if @brewery.open_today  %>
         <br><div class="label label-success">OPEN TODAY</div> <br><br>
+        Also open on <% JSON.parse(@brewery.open).each do |day| %>
+        <%= day unless day == Date.today.strftime("%A") %>
+        <% end %>
         <% else %>
         <br><div class="label label-danger">CLOSED TODAY</div> <br> <br>
-        Open again on: <% JSON.parse(@brewery.open).each do |day| %>
+        Open on: <% JSON.parse(@brewery.open).each do |day| %>
         <%= day %>
         <% end %>
         <% end %> <br>
@@ -92,7 +95,15 @@
   <!-- After show of one brewery or option to search for a brewery show all breweries -->
   <div class="breweries-all">
     <h2>Other breweries</h2>
-    <% @breweries.each do |brewery| %>
+
+    <!-- If location is known sort on distance -->
+    <% if @zipcode %>
+      <% @all_breweries = @breweries.near(@zipcode, 200, order: "distance") %>
+    <% else %>
+      <% @all_breweries = @breweries %>
+    <% end %>
+
+    <% @all_breweries.each do |brewery| %>
     <div class="breweries-name">
       <%= link_to brewery.name, brewers_path(brewery: brewery), class: "breweries-link" %>, <%= brewery.city %>
     </div>
@@ -109,7 +120,7 @@
 
       <!-- Compute distance of all breweries -->
     </div>
-        <% if @brewery && @zipcode %>
+        <% if @zipcode %>
              <%= brewery.distance(@zipcode).round(0) %> km away
         <% end %> <br>
 
