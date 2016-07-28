@@ -1,139 +1,148 @@
 <div class="wrapper-breweries">
-  <% if @brewery %>
 
-  <!-- Show the brewery if there is a brewery selected -->
+ <!-- Show the brewery if there is a brewery selected -->
+ <% if @brewery %>
   <div class="breweries-closest">
     <div class="text-center">
 
-      <!-- Differ text depending on brewery found nearby or by clicking the link -->
-      <% if @zipcode %>
-      The closest brewery to <%= @zipcode %> is..
+    <!-- Differ text depending on if the brewery is found by zipcode -->
+     <% if @zipcode %>
+        The closest brewery to <%= @zipcode %> is..
       <% end %>
+
       <br> <h2><%= @brewery.name %></h2>
     </div>
-    <div class="brewery-info">
 
-      <div id="brewery-map">
+    <!-- Here comes all the info about the brewery -->
+  <div class="brewery-info">
 
-      </div>
-      <div class="brewery-rest">
-        <!-- Show their beers if there are any in de database -->
-        <% if @beers.length > 0 %>
+    <!-- Code for the map will be generated with JS at the bottom of this file -->
+    <div id="brewery-map"></div>
+
+    <!-- Other info about the brwery is shown here -->
+    <div class="brewery-rest">
+
+      <!-- Show their beers if there are any in de database -->
+      <% if @beers.length > 0 %>
         They serve:
         <div class="brewery-beers">
           <% @beers.each do |beer|  %>
-          <div class="brewery-beer-card">
+            <div class="brewery-beer-card">
             <%= beer.name %> <br>
             <%= beer.style %>,
             <%= beer.alcohol %>% <br>
             keg: <%= beer.volume %> l, <%= beer.keg %>
-          </div>
-
+            </div>
           <% end %>
         </div>
-        <% else %>
+
+        <!-- Show funny giphy is there are no beers in the database for this brewery -->
+      <% else %>
         No beers in our database! <br>I'm afraid you'll just have to go there to see which beers they have! <br><br>
-        <img src="https://media.giphy.com/media/ZzN0sVmiYGRB6/giphy.gif" alt="beer me">
-        <br><br>
-        <% end %>
-        <!-- Show if brewery is open today -->
-        <% if @brewery.open_today  %>
+        <img src="https://media.giphy.com/media/ZzN0sVmiYGRB6/giphy.gif" alt="beer me"><br><br>
+      <% end %>
+
+      <!-- Show if brewery is open or closed today -->
+      <% if @brewery.open_today  %>
         <br><div class="label label-success">OPEN TODAY</div> <br><br>
         Also open on <% JSON.parse(@brewery.open).each do |day| %>
         <%= day unless day == Date.today.strftime("%A") %>
         <% end %>
-        <% else %>
+      <% else %>
         <br><div class="label label-danger">CLOSED TODAY</div> <br> <br>
         Open on: <% JSON.parse(@brewery.open).each do |day| %>
         <%= day %>
         <% end %>
-        <% end %> <br>
-
-        <!-- Show adress of brewery -->
-        Address: <%= @brewery.address %>,
-        <%= @brewery.zipcode %>,
-        <%= @brewery.city %> <br><br>
-
-        <!-- Show icon depending on distance -->
-        <% if @zipcode %>
-        <% if @distance < 3 %>
-        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-        <% elsif @distance < 20 %>
-        <i class="fa fa-bicycle" aria-hidden="true"></i>
-        <% else %>
-        <i class="fa fa-bicycle" aria-hidden="true"></i>
-        <% end %>
-        <%= @brewery.distance(@zipcode).round(2) %> km away
-        <br>
-        <% end %>
-
-      </div>
-    </div>
-  </div>
-
-
-  <!-- If there is no brewery selected show form to put in postal code -->
-
-  <% else %>
-
-  <!-- When no location was sound show message -->
-  <% if @zipcode %>
-  <div class="breweries-message">Oh no! There are no close breweries to <%= @zipcode %>. Please try again. </div>
-  <% end %>
-
-  <!-- ask for zipcode -->
-  <div class="breweries-find">
-    <div class="form">
-      <%= form_tag brewers_path, method: "get"  do %>
-      <%= text_field_tag "zipcode", nil, pattern: '\d{4}\s?[a-zA-Z]{2}', :placeholder => "fill in your zipcode", class: "input-postcode", autocomplete: "off", title: "e.g. 1234AZ", required: true %>
-      <%= submit_tag "find beer", class: "btn-beer" %>
-      <% end %>
-    </div>
-  </div>
-  <% end %>
-
-  <!-- After show of one brewery or option to search for a brewery show all breweries -->
-  <div class="breweries-all">
-    <h2>Other breweries</h2>
-
-    <!-- If location is known sort on distance -->
-    <% if @zipcode && @brewery %>
-      <% @all_breweries = @breweries.near(@zipcode, 200, order: "distance") %>
-    <% else %>
-      <% @all_breweries = @breweries %>
-    <% end %>
-
-    <% @all_breweries.each do |brewery| %>
-    <div class="breweries-name">
-      <%= link_to brewery.name, brewers_path(brewery: brewery), class: "breweries-link" %>, <%= brewery.city %>
-    </div>
-    <div class="breweries-click">
-
-      <!-- Show if brewery is open today or closed -->
-      <div class="open">
-        <% if brewery.open_today  %>
-        <div class="label label-success">OPEN</div>
-        <% else %>
-        <div class="label label-danger">CLOSED</div>
-        <% end %>
-      </div>
-
-      <!-- Compute distance of all breweries -->
-    </div>
-        <% if @zipcode && @brewery %>
-             <%= brewery.distance(@zipcode).round(0) %> km away
-        <% end %> <br>
-
-    <!-- link to show brewery -->
-
       <% end %> <br>
-    <%= link_to "search another brewery", brewers_path, class: "btn-biertje"  %>
-    <br><br>
+
+      <!-- Show adress of brewery -->
+      Address: <%= @brewery.address %>,
+      <%= @brewery.zipcode %>,
+      <%= @brewery.city %> <br><br>
+
+      <!-- Show icon and distance depending on distance -->
+      <% if @zipcode %>
+        <% if @distance < 3 %>
+         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+        <% elsif @distance < 20 %>
+          <i class="fa fa-bicycle" aria-hidden="true"></i>
+        <% else %>
+          <i class="fa fa-bicycle" aria-hidden="true"></i>
+        <% end %>
+        <%= @brewery.distance(@zipcode).round(2) %> km away <br>
+      <% end %>
+
+    </div>
   </div>
 </div>
 
 
-<!-- Code to show te location of brewery on a map -->
+<!-- If there is no brewery selected show form to put in postal code -->
+<% else %>
+
+<!-- When zipcode was filled in but no location was found show message -->
+<% if @zipcode %>
+  <div class="breweries-message">Oh no! There are no close breweries to <%= @zipcode %>. Please try again. </div>
+<% end %>
+
+<!-- ask for zipcode -->
+<div class="breweries-find">
+  <div class="form">
+    <%= form_tag brewers_path, method: "get"  do %>
+    <%= text_field_tag "zipcode", nil, pattern: '\d{4}\s?[a-zA-Z]{2}', :placeholder => "fill in your zipcode", class: "input-postcode", autocomplete: "off", title: "e.g. 1234AZ", required: true %>
+    <%= submit_tag "find beer", class: "btn-beer" %>
+    <% end %>
+  </div>
+</div>
+<% end %>
+
+
+<!-- Always show all breweries (except for the showcased one) -->
+<div class="breweries-all">
+  <h2>Other breweries</h2>
+
+  <!-- If zipcode is known sort on distance -->
+  <% if @zipcode && @brewery %>
+    <% @all_breweries = @breweries.near(@zipcode, 200, order: "distance") %>
+  <!-- if zipcode is unknown just show them -->
+  <% else %>
+    <% @all_breweries = @breweries %>
+  <% end %>
+
+  <% @all_breweries.each do |brewery| %>
+  <!-- Show all breweries except for brewery that is shown -->
+  <% unless brewery == @brewery %>
+    <div class="breweries-name">
+      <%= link_to brewery.name, brewers_path(brewery: brewery), class: "breweries-link" %>, <%= brewery.city %>
+    </div>
+
+
+
+    <!-- Show if brewery is open today or closed -->
+    <div class="breweries-click">
+      <div class="open">
+        <% if brewery.open_today  %>
+          <div class="label label-success">OPEN</div>
+        <% else %>
+          <div class="label label-danger">CLOSED</div>
+        <% end %>
+      </div>
+
+    <!-- Compute distance of the brewery to the zipcode -->
+   </div>
+    <% if @zipcode && @brewery %>
+      <%= brewery.distance(@zipcode).round(0) %> km away
+    <% end %> <br>
+  <% end %>
+
+  <!-- Give option to search for a brewery with (another) zipcode -->
+  <% end %> <br>
+  <%= link_to "search another brewery", brewers_path, class: "btn-biertje"  %> <br><br>
+</div>
+</div>
+
+
+<!-- Code to show te location of brewery on a map if there is a brewery-->
 <% if @brewery %>
 
 <% content_for(:after_js) do %>
@@ -150,23 +159,13 @@
       styles: window.mapStyle
     });
 
-    // keeps marker in center
-    // map.addListener('idle', function(map){
-    //   this.setCenter(marker.getPosition());
-    // });
-
     var marker = new google.maps.Marker({
       position: myLatLng,
       map: map,
       animation: google.maps.Animation.DROP,
       icon: "http://emoji.fileformat.info/gemoji/beer.png"
     });
-
-
-
   })
 </script>
 <% end %>
-
-
 <% end %>

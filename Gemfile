@@ -31,6 +31,7 @@ gem "simple_form"
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'font-awesome-sass'
 gem "gmaps4rails"
+gem 'figaro'
 
 source 'https://rails-assets.org' do
   gem "rails-assets-underscore"
