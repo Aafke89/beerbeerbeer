@@ -85,7 +85,7 @@
   <div class="breweries-find">
     <div class="form">
       <%= form_tag brewers_path, method: "get"  do %>
-      <%= text_field_tag "zipcode", nil, pattern: '\d{4}\s?[a-zA-Z]{2}', :placeholder => "fill in your zipcode", class: "input-postcode", autocomplete: "off", title: "e.g. 1234AZ" %>
+      <%= text_field_tag "zipcode", nil, pattern: '\d{4}\s?[a-zA-Z]{2}', :placeholder => "fill in your zipcode", class: "input-postcode", autocomplete: "off", title: "e.g. 1234AZ", required: true %>
       <%= submit_tag "find beer", class: "btn-beer" %>
       <% end %>
     </div>
