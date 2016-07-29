@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20160727144606) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "beers", force: :cascade do |t|
     t.string   "brewery"
     t.string   "name"
@@ -29,7 +32,7 @@ ActiveRecord::Schema.define(version: 20160727144606) do
     t.string   "address"
     t.string   "zipcode"
     t.string   "city"
-    t.text     "open"
+    t.text     "open",                    array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.float    "latitude"

@@ -45,12 +45,12 @@
       <!-- Show if brewery is open or closed today -->
       <% if @brewery.open_today  %>
         <br><div class="label label-success">OPEN TODAY</div> <br><br>
-        Also open on <% JSON.parse(@brewery.open).each do |day| %>
+        Also open on <% @brewery.open.each do |day| %>
         <%= day unless day == Date.today.strftime("%A") %>
         <% end %>
       <% else %>
         <br><div class="label label-danger">CLOSED TODAY</div> <br> <br>
-        Open on: <% JSON.parse(@brewery.open).each do |day| %>
+        Open on: <% @brewery.open.each do |day| %>
         <%= day %>
         <% end %>
       <% end %> <br>
